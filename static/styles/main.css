@@ -24,6 +24,7 @@
 .navigation{
     float: right;
     height: 100%;
+    color: white;
 }
 
 .navigation a{
@@ -31,6 +32,7 @@
     padding: 0px 20px;
     height: 100%;
     display: table;
+    color: inherit;
 }
 
 .navigation a li{
@@ -39,7 +41,7 @@
     height: 100%;
     font-size: 20px;
     font-weight: 100;
-    color: white;
+    color: inherit;
 }
 
 .navigation a:hover{
