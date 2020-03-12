@@ -5,7 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 #Create Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamstats.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teams.db'
 db = SQLAlchemy(app)
 
 #Create table
