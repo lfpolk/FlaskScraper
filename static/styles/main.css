@@ -46,7 +46,7 @@
   background-color: black;
 }
 
-.logo {
+#logo {
     float: left;
     display: table-cell;
     vertical-align: middle;
