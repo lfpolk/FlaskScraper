@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Learn Flask </title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 id="statsHeader">Stats</h1> <br>
+    {% if teams|length == 0 %}
+    <p>{{ teams[0].teamName }}</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>Team ID</th>
+                <th>Team Name</th>
+                <th>Games Played</th>
+                <th>Corsi For</th>
+                <th>Corsi Against</th>
+            </tr>
+            {% for team in teams %}
+            <tr>
+                <td>{{ team.id }}</td>
+                <td>{{ team.teamName }}</td>
+                <td>{{ team.gamesPlayed }}</td>
+                <td>{{ team.corsiFor }}</td>
+                <td>{{ team.corsiAgainst }}</td>
+            </tr>
+
+            {% endfor %}
+        </table>
+        {% endif %}
+        </div>
+</div>
+{% endblock %}

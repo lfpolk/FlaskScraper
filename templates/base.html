@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/main.js') }}"></script>
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="header">
+        <a href="/">
+            <img id="logo" src="static/gallery/logo.png">
+            <div class="predictorText">
+                <h1>NHL<span>PREDICTOR</span></h1>
+            </div>
+        </a>
+        <div class="inner-header">
+        <ul class="navigation">
+            <a href="/"><li>Home</li></a>
+            <a href="/stats"><li>Stats</li></a>
+            <a href="/about"><li>About</li></a>
+            <a href="/contact"><li>Contact</li></a>
+        </ul>
+
+        </div>
+    </div>
+    <br>
+    {% block body %}{% endblock %}
+</body>
+</html>
