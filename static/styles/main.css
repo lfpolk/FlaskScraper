@@ -39,9 +39,14 @@
     height: 100%;
     font-size: 20px;
     font-weight: 100;
+    color: white;
 }
 
-#logo {
+.navigation a:hover{
+  background-color: black;
+}
+
+.logo {
     float: left;
     display: table-cell;
     vertical-align: middle;
@@ -165,19 +170,23 @@ table, th, td {
   #home-logo {
     width: 200px;
     height: 200px;
+    position:relative;
   }
   
   #homeTeam {
    margin-left: 20px;
+   position:relative;
   }
   
   #away-logo {
     width: 200px;
     height: 200px;
+    position:relative;
   }
   
   #awayTeam {
     margin-right: 20px;
+    position:relative;
   }
   
   #background {
