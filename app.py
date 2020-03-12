@@ -111,7 +111,7 @@ if len(teams) < 1:
         db.session.commit()
 print(len(teams))
 
-s
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
