@@ -1,11 +1,12 @@
 from flask import Flask, render_template, url_for, request, redirect
 import requests, bs4, sys
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc, func
 from datetime import datetime
 
 app = Flask(__name__)
 #Create Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teams.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fullstats.db'
 db = SQLAlchemy(app)
 
 #Create table
@@ -15,9 +16,17 @@ class Todo(db.Model):
     corsiFor = db.Column(db.Integer, nullable=False)
     corsiAgainst = db.Column(db.Integer, nullable=False)
     gamesPlayed = db.Column(db.Integer, nullable=False)
+    PPG = db.Column(db.Integer, nullable=False)
+    PPO = db.Column(db.Integer, nullable=False)
+    SHG = db.Column(db.Integer, nullable=False)
+    SHO = db.Column(db.Integer, nullable=False)
+    PPGA = db.Column(db.Integer, nullable=False)
+    PPOA = db.Column(db.Integer, nullable=False)
+    
 
     def __repr__(self):
         return'<Task %r>' % self.id
+
 
 #Create class for each team to be an object of
 class Team:
@@ -26,16 +35,26 @@ class Team:
     totalCorsi = 0
 
 
-    def __init__(self, teamName, corsiFor, corsiAgainst):
+    def __init__(self, teamName, corsiFor, corsiAgainst, corsiFPercent, shotPercent, gamesPlayed, ppGoals, ppOpp, shGoals, shOpp, ppGAgainst, ppOppAgainst):
         self.teamName = teamName
         self.corsiFor = corsiFor
         self.corsiAgainst = corsiAgainst
+        self.corsiFPercent = corsiFPercent
+        self.shotPercent = shotPercent
+        self.gamesPlayed= gamesPlayed
+        self.ppGoals = ppGoals
+        self.ppOpp = ppOpp
+        self.shGoals = shGoals
+        self.shOpp = shOpp
+        self.ppGAgainst = ppGAgainst
+        self.ppOppAgainst = ppOppAgainst
+
 
 #Request URL from hockey-reference
-res = requests.get('https://www.hockey-reference.com/play-index/tpbp_finder.cgi?request=1&match=single&year_min=2020&year_max=2020&situation_id=5on5&order_by=corsi_for')
+ref = requests.get('https://www.hockey-reference.com/play-index/tpbp_finder.cgi?request=1&match=single&year_min=2020&year_max=2020&situation_id=5on5&order_by=corsi_for')
 
 #Parse the HTML file
-soup = bs4.BeautifulSoup(res.text, 'html.parser')
+soup = bs4.BeautifulSoup(ref.text, 'html.parser')
 list = []
 #Read each element from the table on hockey reference into objects
 for i in range(1,33):
@@ -53,10 +72,16 @@ for i in range(1,33):
         elem = soup.select(f'#stats > tbody > tr:nth-child({i}) > td:nth-child(5)')
         cAgainst = int(elem[0].text)
 
+        #Calculate corsi %
+        CP = cFor / (cFor + cAgainst)
+
+        #Get shooting %
+        elem = soup.select(f'#stats > tbody > tr:nth-child({i}) > td:nth-child(10)')
+        shotP = float(elem[0].text)
+
         #Create object for each team with corsi stats
-        globals()[team] = Team(team,cFor, cAgainst)
-        Team.totalCorsi = Team.totalCorsi + cFor
-        list.append(globals()[team])
+        scrape_team = Team(team,cFor, cAgainst, CP, shotP, 0, 0, 0, 0, 0, 0, 0)
+        list.append(scrape_team)
 
 list.sort(key=lambda x: x.teamName)
 #Swap to order by team name, not abr
@@ -102,15 +127,89 @@ list[28].teamName = "Vegas Golden Knights"
 list[29].teamName = "Washington Capitals"
 list[30].teamName = "Winnipeg Jets"
 
-teams = Todo.query.order_by(Todo.teamName).all()
-if len(teams) < 1:
-    for i in range(30):
-        new_team = Todo(teamName=list[i].teamName,corsiFor=list[i].corsiFor,corsiAgainst=list[i].corsiAgainst,gamesPlayed=60)
+fox = requests.get('https://www.foxsports.com/nhl/team-stats?season=2019&category=SPECIAL+TEAMS&group=1&time=0&pos=0&team=1&page=1')
+soup = bs4.BeautifulSoup(fox.text, 'html.parser')
 
+NYI = 0
+#Read each element from the table on fox sports
+for i in range(1,32):
+
+        #find where stats go in list
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td.wisbb_text.wisbb_fixedColumn > div > span:nth-child(3)')
+        team = elem[0].text
+        if team == 'New York':
+            if NYI == 1:
+                team = team + ' Islanders'
+            NYI += 1
+        for city in list:
+            if (city.teamName.startswith(team)):
+                index = list.index(city)
+
+        #Get Games Played
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(2)')
+        GP = int(elem[0].text)
+
+        #Get PP goals
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(3)')
+        ppG = int(elem[0].text)
+
+        #Get PP opportunities
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(4)')
+        ppO = int(elem[0].text)
+
+        #Get SH goals
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(6)')
+        shG = int(elem[0].text)
+
+        #Get SH opportunities
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(7)')
+        shO = int(elem[0].text)
+
+        #Get PP GA
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(9)')
+        ppGA = int(elem[0].text)
+
+        #Get PP opportunites against
+        elem = soup.select(f'#wisfoxbox > section.wisbb_body > div.wisbb_expandableTable.wisbb_teamFixed.wisbb_statsTable > table > tbody > tr:nth-child({i}) > td:nth-child(10)')
+        ppOA = float(elem[0].text)
+
+        #Update list with PP stats
+        list[index].gamesPlayed = GP
+        list[index].ppGoals = ppG
+        list[index].ppOpp = ppO
+        list[index].shGoals = shG
+        list[index].shOpp = shO
+        list[index].ppGAgainst = ppGA
+        list[index].ppOppAgainst = ppOA
+
+corsiFor = sum(c.corsiFor for c in list)
+corsiAgainst = sum(c.corsiAgainst for c in list)
+corsiFPercent = sum(c.corsiFPercent for c in list)
+shotPercent = sum(c.shotPercent for c in list)
+gamesPlayed = sum(c.gamesPlayed for c in list)
+ppGoals = sum(c.ppGoals for c in list)
+ppOpp = sum(c.ppOpp for c in list)
+shGoals = sum(c.shGoals for c in list)
+shOpp = sum(c.shOpp for c in list)
+ppGAgainst = sum(c.ppGAgainst for c in list)
+ppOppAgainst = sum(c.ppOppAgainst for c in list)
+
+leagueAVG = Team('League Average',corsiFor/31, corsiAgainst/31, corsiFPercent/31, shotPercent/31, gamesPlayed/31, ppGoals/31, ppOpp/31, shGoals/31, shOpp/31, ppGAgainst/31, ppOppAgainst/31)
+list.append(leagueAVG)
+teams = Todo.query.order_by(Todo.teamName).all()
+if len(teams) < 32:
+    for i in teams:
+        db.session.delete(i)
+        db.session.commit()
+    for i in range(0,32):
+        new_team = Todo(teamName=list[i].teamName,corsiFor= list[i].corsiFor/list[i].gamesPlayed, corsiAgainst=list[i].corsiAgainst/list[i].gamesPlayed, gamesPlayed=list[i].gamesPlayed, PPG = list[i].ppGoals / list[i].gamesPlayed, PPO = list[i].ppOpp / list[i].gamesPlayed, SHG = list[i].shGoals / list[i].gamesPlayed, SHO = list[i].shOpp / list[i].gamesPlayed, PPGA = list[i].ppGAgainst / list[i].gamesPlayed, PPOA = list[i].ppOppAgainst / list[i].gamesPlayed)
         db.session.add(new_team)
         db.session.commit()
-print(len(teams))
 
+if len(teams) > 32:
+    for i in teams:
+        db.session.delete(i)
+        db.session.commit()
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -121,26 +220,17 @@ def index():
 
 @app.route('/stats')
 def stats():
+    teams = Todo.query.order_by(Todo.teamName).all()
     return render_template('stats.html', teams=teams)
-
-@app.route('/delete/<int:id>')
-def delete(id):
-    try:
-        task_to_delete = Todo.query.get_or_404(id)
-        db.session.delete(task_to_delete)
-        db.session.commit()
-        teams = Todo.query.order_by(Todo.teamName).all()
-        return render_template('stats.html',teams=teams)
-    except:
-        return 'There was a problem deleting the task'
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
+@app.route('/PPstats')
+def PPstats():
+    teams = Todo.query.order_by(Todo.teamName).all()
+    return render_template('PPstats.html', teams=teams)
 
 if __name__ == "__main__":
     app.run(debug=True)

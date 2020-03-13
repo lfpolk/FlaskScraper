@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Learn Flask </title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 id="statsHeader">Special Teams Stats Per Game</h1> <br>
+    {% if teams|length == 0 %}
+    <p>No teams</p>
+    {% else %}
+        <table class="StatsTable" id="PPTable">
+            <tr class="StatsHeader">
+                <th><p><button onclick="sortPPTable('statsPPName')">Team Name</button></p></th>
+                <th><p><button onclick="sortPPTable('statsPPGP')">GP</button></th>
+                <th><p><button onclick="sortPPTable('statsPPG')">PPG</button></th>
+                <th><p><button onclick="sortPPTable('statsPP')">PPA</button></th>
+                <th><p><button onclick="sortPPTable('statsPPP')">PP %</button></th> 
+                <th><p><button onclick="sortPPTable('statsSHG')">SHG</button></th>
+                <th><p><button onclick="sortPPTable('statsSH')">SHA</button></th>
+                <th><p><button onclick="sortPPTable('statsSHP')">SH %</button></th>
+                <th><p><button onclick="sortPPTable('statsPPGA')">PPGA</button></th>
+                <th><p><button onclick="sortPPTable('statsPPA')">PPAA</button></th>
+                <th><p><button onclick="sortPPTable('statsPPAP')">PK %</button></th>
+            </tr>
+            {% for team in teams %}
+            <tr class="StatsData">
+                <td class="statsPPName">{{ team.teamName }}</td>
+                <td class="statsPPGP">{{ team.gamesPlayed|round }}</td>
+                <td class="statsPPG">{{ ((team.PPG * 10)|round)/10 }}</td>
+                <td class="statsPP">{{ ((team.PPO * 10)|round)/10 }}</td>
+                <td class="statsPPP">{{ (((100 * team.PPG / (team.PPO)) * 10)|round) / 10}}%</td>
+                <td class="statsSHG">{{ ((team.SHG * 10)|round)/10 }}</td>
+                <td class="statsSH">{{ ((team.SHO * 10)|round)/10 }}</td>
+                <td class="statsSHP">{{ (((100 * team.SHG / (team.SHO)) * 10)|round) / 10}}%</td>
+                <td class="statsPPGA">{{ ((team.PPGA* 10)|round)/10 }}</td>
+                <td class="statsPPA">{{ ((team.PPOA * 10)|round)/10 }}</td>
+                <td class="statsPPAP">{{ 100 - (((100 * team.PPGA / (team.PPOA)) * 10)|round) / 10}}%</td>
+
+            </tr>
+
+            {% endfor %}
+        </table>
+        {% endif %}
+        </div>
+</div>
+{% endblock %}

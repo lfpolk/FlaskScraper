@@ -5,6 +5,12 @@
     text-decoration: none;
 }
 
+body {
+  font-family: sans-serif;
+  margin: 1;
+  text-align: center;
+}
+
 .header {
     margin: 0;
     padding: 0;
@@ -79,20 +85,91 @@
     font-weight: 800;
 }
 
-#statsHeader{
-    display: block;
+.StatsTable {
+  padding: 15px;
+  border-spacing: 0px;
 }
 
-body {
-    font-family: sans-serif;
-    margin: 1;
-    text-align: center;
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.StatsHeader th {
+  background-color: #666666;
+  color: white;
+  text-align: left;
+  height: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
+
+.StatsHeader button {
+  color: white;
+  background-color: #666666;
+  border: none;
+  font-size: 18px;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+.StatsData td {
+  height: 25px;
+  padding-left: 5px;
+}
+
+.StatsName {
+  width: 40%;
+}
+
+.StatsGP {
+  width: 8%;
+}
+
+.StatsCF {
+  width: 16%;
+}
+
+.StatsCA {
+  width: 16%;
+}
+
+.StatsCP {
+  width: 8%;
+}
+
+.statsPPName {
+  width: 20%;
+}
+.statsPPGP {
+  width: 10%;
+}
+
+.statsPPG {
+  width: 5%;
+}
+
+.statsPP {
+  width: 5%;
+}
+
+.statsPPP {
+  width: 10%;
+}
+
+.statsSHG {
+  width: 5%;
+}
+
+.statsSH {
+  width: 5%;
+}
+
+.statsSHP {
+  width: 10%;
+}
+
 
 table, th, td {
     text-align: left;
-    margin: 2px;
-    border: 1px solid black;
+    margin: 3px;
     margin-left: auto;
     margin-right: auto;
   }
