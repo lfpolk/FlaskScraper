@@ -245,6 +245,7 @@ table, th, td {
   .simulateButton:hover {
     background-color: #00e;
     color: white;
+    cursor: pointer;
   }
   
   #home-logo {
