@@ -24,7 +24,7 @@
                 <td class="StatsGP">{{ team.gamesPlayed|round }}</td>
                 <td class="StatsCF">{{ ((team.corsiFor * 10)|round)/10 }}</td>
                 <td class="StatsCA">{{ ((team.corsiAgainst * 10)|round)/10 }}</td>
-                <td class="StatsCP">{{ (((100 * team.corsiFor / (team.corsiFor + team.corsiAgainst)) * 10)|round) / 10 }}</td>
+                <td class="StatsCP">{{ (((100 * team.corsiFor / (team.corsiFor + team.corsiAgainst)) * 10)|round) / 10 }}%</td>
             </tr>
 
             {% endfor %}
