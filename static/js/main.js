@@ -39,6 +39,7 @@ var logo = [
         document.getElementById("sameTeam").innerHTML = "Teams can't play themselves";
       }
       else {
+      document.getElementById("sameTeam").innerHTML = "";
       homePercentage =  Math.round((Math.random() * 40)) + 30;
       document.getElementById("homeWPercent").innerHTML = homePercentage + "%";
       document.getElementById("awayWPercent").innerHTML = (100 - homePercentage) + "%";
