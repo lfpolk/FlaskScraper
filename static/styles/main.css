@@ -99,6 +99,9 @@ tr:nth-child(even) {background-color: #f2f2f2;}
   height: 30px;
   padding-left: 5px;
   padding-right: 5px;
+  color: white;
+  font-size: 18px;
+  font-family: sans-serif;
 }
 
 .StatsHeader button {
@@ -128,11 +131,15 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 
 .StatsCA {
-  width: 16%;
+  width: 18%;
 }
 
 .StatsCP {
-  width: 8%;
+  width: 10%;
+}
+
+.statsShot {
+  width: 16%;
 }
 
 .statsPPName {

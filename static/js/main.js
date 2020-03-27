@@ -79,7 +79,7 @@ var logo = [
           x = rows[i].getElementsByClassName(className)[0];
           y = rows[i + 1].getElementsByClassName(className)[0];
           //check if the two rows should switch place:
-          if (className == "StatsCF" || className == "StatsCP") {
+          if (className == "StatsCF" || className == "StatsCP" || className == "StatsGP") {
             if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
             //if so, mark as a switch and break the loop:
               shouldSwitch = true;

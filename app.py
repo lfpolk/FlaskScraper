@@ -6,7 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 #Create Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fullstats.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamstats.db'
 db = SQLAlchemy(app)
 
 #Create table
@@ -16,6 +16,7 @@ class Todo(db.Model):
     corsiFor = db.Column(db.Integer, nullable=False)
     corsiAgainst = db.Column(db.Integer, nullable=False)
     gamesPlayed = db.Column(db.Integer, nullable=False)
+    shotP = db.Column(db.Integer, nullable=False)
     PPG = db.Column(db.Integer, nullable=False)
     PPO = db.Column(db.Integer, nullable=False)
     SHG = db.Column(db.Integer, nullable=False)
@@ -202,7 +203,7 @@ if len(teams) < 32:
         db.session.delete(i)
         db.session.commit()
     for i in range(0,32):
-        new_team = Todo(teamName=list[i].teamName,corsiFor= list[i].corsiFor/list[i].gamesPlayed, corsiAgainst=list[i].corsiAgainst/list[i].gamesPlayed, gamesPlayed=list[i].gamesPlayed, PPG = list[i].ppGoals / list[i].gamesPlayed, PPO = list[i].ppOpp / list[i].gamesPlayed, SHG = list[i].shGoals / list[i].gamesPlayed, SHO = list[i].shOpp / list[i].gamesPlayed, PPGA = list[i].ppGAgainst / list[i].gamesPlayed, PPOA = list[i].ppOppAgainst / list[i].gamesPlayed)
+        new_team = Todo(teamName=list[i].teamName,corsiFor= list[i].corsiFor/list[i].gamesPlayed, corsiAgainst=list[i].corsiAgainst/list[i].gamesPlayed, gamesPlayed=list[i].gamesPlayed, shotP=list[i].shotPercent, PPG = list[i].ppGoals / list[i].gamesPlayed, PPO = list[i].ppOpp / list[i].gamesPlayed, SHG = list[i].shGoals / list[i].gamesPlayed, SHO = list[i].shOpp / list[i].gamesPlayed, PPGA = list[i].ppGAgainst / list[i].gamesPlayed, PPOA = list[i].ppOppAgainst / list[i].gamesPlayed)
         db.session.add(new_team)
         db.session.commit()
 

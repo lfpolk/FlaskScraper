@@ -17,6 +17,7 @@
                 <th><p><button onclick="sortTable('StatsCF')">Corsi For</button></th>
                 <th><p><button onclick="sortTable('StatsCA')">Corsi Against</button></th>
                 <th><p><button onclick="sortTable('StatsCP')">CF %</button></th>
+                <th><p>Shot %</button></th>
             </tr>
             {% for team in teams %}
             <tr class="StatsData">
@@ -25,6 +26,7 @@
                 <td class="StatsCF">{{ ((team.corsiFor * 10)|round)/10 }}</td>
                 <td class="StatsCA">{{ ((team.corsiAgainst * 10)|round)/10 }}</td>
                 <td class="StatsCP">{{ (((100 * team.corsiFor / (team.corsiFor + team.corsiAgainst)) * 10)|round) / 10 }}%</td>
+                <td class="StatsShot">{{ ((team.shotP * 10)|round)/10 }}%</td>
             </tr>
 
             {% endfor %}
