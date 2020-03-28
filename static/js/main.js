@@ -1,4 +1,5 @@
 var logo = [
+    "",
     "https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png",
     "https://nhl.bamcontent.com/images/assets/binary/309994320/binary-file/file.svg",
     "https://nhl.bamcontent.com/images/assets/binary/301172494/binary-file/file.svg",
@@ -45,18 +46,21 @@ var logo = [
       document.getElementById("awayWPercent").innerHTML = (100 - homePercentage) + "%";
     
       }
+      document.getElementById("SimulatedData").style.visibility = "visible";
     }
     
     function changeHomeImage() {
       document.getElementById("home-logo").src = logo[document.getElementById("homeTeam").value];
       document.getElementById("homeWPercent").innerHTML = " ";
       document.getElementById("awayWPercent").innerHTML = " ";
+      document.getElementById("SimulatedData").style.visibility = "hidden";
     }
     
     function changeAwayImage() {
       document.getElementById("away-logo").src = logo[document.getElementById("awayTeam").value];
       document.getElementById("homeWPercent").innerHTML = " ";
       document.getElementById("awayWPercent").innerHTML = " ";
+      document.getElementById("SimulatedData").style.visibility = "hidden";
     }
 
     function sortTable(className) {

@@ -12,12 +12,27 @@
     {% else %}
         <table class="StatsTable" id="statsTable">
             <tr class="StatsHeader">
-                <th><p><button onclick="sortTable('StatsName')">Team Name</button></p></th>
-                <th><p><button onclick="sortTable('StatsGP')">GP</button></th>
-                <th><p><button onclick="sortTable('StatsCF')">Corsi For</button></th>
-                <th><p><button onclick="sortTable('StatsCA')">Corsi Against</button></th>
-                <th><p><button onclick="sortTable('StatsCP')">CF %</button></th>
-                <th><p>Shot %</button></th>
+                <th><button onclick="sortTable('StatsName')">Team Name</button></th>
+                <th>
+                    <a class="tooltips">
+                    <button onclick="sortTable('StatsGP')">GP</button><span>Games played</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <button onclick="sortTable('StatsCF')">Corsi For</button><span>5v5 total shot attempts (on goal + missed + blocked)</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <button onclick="sortTable('StatsCA')">Corsi Against</button><span>5v5 shot attempts against</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <button onclick="sortTable('StatsCP')">CF %</button><span>Corsi for / (corsi for + corsi against)</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p>Shot %</button><span>Percent of shots resulting in goals</span></a>
+                    </th>
             </tr>
             {% for team in teams %}
             <tr class="StatsData">

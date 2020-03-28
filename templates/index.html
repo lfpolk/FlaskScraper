@@ -3,100 +3,43 @@
 {% block head %}
 {% endblock %}
 {% block body %}
+<form action="/simulation" method="post">
 <div id="home">
   <label for="homeTeam"> Home <br></label>
-  <img id="home-logo" vspace="10" src="https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-25-dark.svg">
+  <img id="home-logo" vspace="10" src="https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png">
   <br>
-  <select id="homeTeam" class="teamDropDown" onchange="changeHomeImage()">
-    <option value="0">Anaheim Ducks</option>
-    <option value="1">Arizona Coyotes</option>
-    <option value="2">Boston Bruins</option>
-    <option value="3">Buffalo Sabres</option>
-    <option value="4">Calgary Flames</option>
-    <option value="5">Carolina Hurricanes</option>
-    <option value="6">Chicago Blackhawks</option>
-    <option value="7">Colorado Avalanche</option>
-    <option value="8">Columbus Blue Jackets</option>
-    <option value="9" selected>Dallas Stars</option>
-    <option value="10">Detroit Red Wings</option>
-    <option value="11">Edmonton Oilers</option>
-    <option value="12">Florida Panthers</option>
-    <option value="13">Los Angeles Kings</option>
-    <option value="14">Minnesota Wild</option>
-    <option value="15">Montreal Canadiens</option>
-    <option value="16">Nashville Predators</option>
-    <option value="17">New Jersey Devils</option>
-    <option value="18">New York Islanders</option>
-    <option value="19">New York Rangers</option>
-    <option value="20">Ottawa Senators</option>
-    <option value="21">Philadelphia Flyers</option>
-    <option value="22">Pittsburgh Penguins</option>
-    <option value="23">San Jose Sharks</option>
-    <option value="24">St. Louis Blues</option>
-    <option value="25">Tampa Bay Lightning</option>
-    <option value="26">Toronto Maple Leafs</option>
-    <option value="27">Vancouver Canucks</option>
-    <option value="28">Vegas Golden Knights</option>
-    <option value="29">Washington Capitals</option>
-    <option value="30">Winnipeg Jets</option>
-
+  <select name="homeTeam" id="homeTeam" class="teamDropDown" onchange="changeHomeImage()">
+    {% for team in teams %}
+    {% if team.teamName == 'League Average' %}
+    {% else %}
+    <option value="{{ team.id }}">{{ team.teamName }}</option>
+    {% endif %}
+    {% endfor %}
   </select>
 <br>
 </div>
 
-<div id="homeWin">
-<p id="winPercent">Win Percentage</p>
-<p class="percentage" id="homeWPercent"></p>
-</div>
 
 <div id="away">
   <label for="awayTeam"> Away <br></label>
-  <img id="away-logo" vspace="10" src="https://nhl.bamcontent.com/images/assets/binary/309991890/binary-file/file.svg">
+  <img id="away-logo" vspace="10" src="https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png">
   <br>
-  <select id="awayTeam" class="teamDropDown" onchange="changeAwayImage()">
-    <option value="0">Anaheim Ducks</option>
-    <option value="1">Arizona Coyotes</option>
-    <option value="2">Boston Bruins</option>
-    <option value="3">Buffalo Sabres</option>
-    <option value="4">Calgary Flames</option>
-    <option value="5">Carolina Hurricanes</option>
-    <option value="6">Chicago Blackhawks</option>
-    <option value="7">Colorado Avalanche</option>
-    <option value="8">Columbus Blue Jackets</option>
-    <option value="9">Dallas Stars</option>
-    <option value="10">Detroit Red Wings</option>
-    <option value="11">Edmonton Oilers</option>
-    <option value="12">Florida Panthers</option>
-    <option value="13">Los Angeles Kings</option>
-    <option value="14">Minnesota Wild</option>
-    <option value="15">Montreal Canadiens</option>
-    <option value="16">Nashville Predators</option>
-    <option value="17">New Jersey Devils</option>
-    <option value="18">New York Islanders</option>
-    <option value="19">New York Rangers</option>
-    <option value="20">Ottawa Senators</option>
-    <option value="21">Philadelphia Flyers</option>
-    <option value="22">Pittsburgh Penguins</option>
-    <option value="23">San Jose Sharks</option>
-    <option value="24" selected>St. Louis Blues</option>
-    <option value="25">Tampa Bay Lightning</option>
-    <option value="26">Toronto Maple Leafs</option>
-    <option value="27">Vancouver Canucks</option>
-    <option value="28">Vegas Golden Knights</option>
-    <option value="29">Washington Capitals</option>
-    <option value="30">Winnipeg Jets</option>
+  <select name ="awayTeam" id="awayTeam" class="teamDropDown" onchange="changeAwayImage()">
+    {% for team in teams %}
+    {% if team.teamName == 'League Average' %}
+    {% else %}
+    <option value="{{ team.id }}">{{ team.teamName }}</option>
+    {% endif %}
+    {% endfor %}
   </select>
 <br>
 </div>
 
-<div id="awayWin">
-<p id="winPercent">Win Percentage</p>
-<p class="percentage" id="awayWPercent"></p>
-</div>
 
 <div id ="simulate">
-<button class="simulateButton" onclick="simulate()"> Simulate Win % </button>
-<p id="sameTeam"> </p>
+<input type="submit" onclick="simulate()" class="simulateButton" value="Simulate Win %"></input>
 </div>
+
+</form>
 
 {% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div>
+    <div id="home">
+        <img id="home-logo" src= {{ homeLogo }}>
+    </div>
+    <div id="away">
+        <img id="away-logo" src= {{ awayLogo }}>
+    </div>
+    <br>
+    <table class="SimulatedData" id="SimulatedData">
+        <tr class="TeamData">
+            <td class="homeStat" id="homeT">{{ home.teamName }}</td>
+            <td class="label">Team</td>
+            <td class="awayStat" id="awayT">{{ away.teamName }}</td>
+          </tr>
+      <tr class="ShotsData">
+        <td class="homeStat" id="homeXS">{{ ((hShots * 10)|round)/10 }}</td>
+        <td class="label">Expected shots</td>
+        <td class="awayStat" id="awayXS">{{ ((aShots * 10)|round)/10 }}</td>
+      </tr>
+      <tr class="ESData">
+        <td class="homeStat" id="homeEXEG">{{ ((hESG * 100)|round)/100 }}</td>
+        <td class="label">Expected ES goals</td>
+        <td class="awayStat" id="awayEXEG">{{ ((aESG * 100)|round)/100 }}</td>
+      </tr>
+      <tr class="PPData">
+        <td class="homeStat" id="homeXPP">{{ ((hPPG * 100)|round)/100 }}</td>
+        <td class="label">Expected PP goals</td>
+        <td class="awayStat" id="awayXPP">{{ ((aPPG * 100)|round)/100 }}</td>
+      </tr>
+      <tr class="scoreData">
+        <td class="homeStat" id="homeScore">{{ ((hXG * 100)|round)/100 }}</td>
+        <td id="score" class="label">Expected Score</td>
+        <td class="awayStat" id="awayScore">{{ ((aXG * 100)|round)/100 }}</td>
+      </tr>
+      <tr class="winData">
+        <td class="homeStat" id="homeWPercent">{{ ((hWP * 10000)|round)/100 }}%</td>
+        <td id="winPercent" class="label">Win Percentage</td>
+        <td class="awayStat" id="awayWPercent">{{ ((aWP * 10000)|round)/100 }}%</td>
+      </tr>
+    </table>
+  </div>
+  <div>
+  <a href="/">
+    <button type="button" class="backHome">Back</button>
+</a>
+</div>
+{% endblock %}

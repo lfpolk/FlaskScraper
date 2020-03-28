@@ -8,9 +8,8 @@
 body {
   font-family: sans-serif;
   margin: 1;
-  text-align: center;
-  background-image: url("https://lh3.googleusercontent.com/proxy/KBLXDMuDRsU6Gq9ksl6nqHN3EinPp3wtRbuSABGMJpgyAPxt9INe642FCbboFltGsBdTri2f_8rRi1pl--V4noddoCmofXBIq17xX0SlfUM8z5PWiNjl4tM3UelL");
-}
+  text-align: center;}
+
 
 .header {
     margin: 0;
@@ -175,6 +174,54 @@ tr:nth-child(odd) {background-color: white;}
   width: 10%;
 }
 
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+a.tooltips span {
+  position: absolute;
+  width:470px;
+  color: #000000;
+  background: #FFFFFF;
+  border: 2px solid #666666;
+  height: 30px;
+  line-height: 35px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 9px;
+  box-shadow: 0px 0px 7px #000000;
+  font-size: 15px;
+  font-weight: 50;
+}
+a.tooltips span:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 18%;
+  margin-left: -12px;
+  width: 0; height: 0;
+  border-top: 12px solid #666666;
+  border-right: 12px solid transparent;
+  border-left: 12px solid transparent;
+}
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 18%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #FFFFFF;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+a:hover.tooltips span {
+  visibility: visible;
+  bottom: 30px;
+  left: 18%;
+  margin-left: -76px;
+  z-index: 999;
+}
 
 table, th, td {
     text-align: left;
@@ -252,9 +299,61 @@ table, th, td {
   }
   
   .simulateButton:hover {
-    background-color: #00e;
+    background-color: black;
     color: white;
     cursor: pointer;
+  }
+
+  .SimulatedData {
+    padding: 30px;
+    border-spacing: 0px;
+}
+
+ .SimulatedData td {
+    text-align: left;
+    font-size: 18px;
+    padding: 10px 100px 10px 100px;
+    font-family: sans-serif;
+    border: 1px solid black;
+  }
+
+  .label {
+    width: 50%;
+    background-color: #666666;
+    color: white;
+    border: 1px solid black;
+    align: center;
+  }
+
+  .homeStats {
+    background-color: #AAAAAA;
+    width: 20%;
+    color: black;
+  }
+
+  .awayStats {
+    background-color: #AAAAAA;
+    width: 20%;
+    color: black;
+  }
+
+  .backHome {
+    background-color: gray;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+  }
+
+  .backHome:hover {
+    background-color: black;
+    cursor: pointer;
+  }
+
+  #winPercent {
+  height: 40px;
   }
   
   #home-logo {

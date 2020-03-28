@@ -13,16 +13,46 @@
         <table class="StatsTable" id="PPTable">
             <tr class="StatsHeader">
                 <th><p><button onclick="sortPPTable('statsPPName')">Team Name</button></p></th>
-                <th><p><button onclick="sortPPTable('statsPPGP')">GP</button></th>
-                <th><p><button onclick="sortPPTable('statsPPG')">PPG</button></th>
-                <th><p><button onclick="sortPPTable('statsPP')">PPA</button></th>
-                <th><p><button onclick="sortPPTable('statsPPP')">PP %</button></th> 
-                <th><p><button onclick="sortPPTable('statsSHG')">SHG</button></th>
-                <th><p><button onclick="sortPPTable('statsSH')">SHA</button></th>
-                <th><p><button onclick="sortPPTable('statsSHP')">SH %</button></th>
-                <th><p><button onclick="sortPPTable('statsPPGA')">PPGA</button></th>
-                <th><p><button onclick="sortPPTable('statsPPA')">PPAA</button></th>
-                <th><p><button onclick="sortPPTable('statsPPAP')">PK %</button></th>
+                <th>
+                    <a class="tooltips">
+                    <button onclick="sortTable('StatsGP')">GP</button><span>Games played</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPPG')">PPG</button><span>Power play goals</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPP')">PPO</button><span>Power play opportunities</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPPP')">PP %</button><span>Percent of power plays scored on</span></a>
+                </th> 
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsSHG')">SHG</button><span>Short handed goals</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsSH')">SHO</button><span>Short handed opportunities</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsSHP')">SH %</button><span>Short handed goals per attempt</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPPGA')">PPGA</button><span>Penalty kill goals against</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPPA')">PPOA</button><span>Penalty kill opportunities</span></a>
+                </th>
+                <th>
+                    <a class="tooltips">
+                    <p><button onclick="sortPPTable('statsPPAP')">PK %</button><span>Percent goal against on penalty kill</span></a>
+                </th>
             </tr>
             {% for team in teams %}
             <tr class="StatsData">

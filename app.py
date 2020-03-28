@@ -130,6 +130,40 @@ list[30].teamName = "Winnipeg Jets"
 
 fox = requests.get('https://www.foxsports.com/nhl/team-stats?season=2019&category=SPECIAL+TEAMS&group=1&time=0&pos=0&team=1&page=1')
 soup = bs4.BeautifulSoup(fox.text, 'html.parser')
+logo = [
+    "",
+    "https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png",
+    "https://nhl.bamcontent.com/images/assets/binary/309994320/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/301172494/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/images/logos/teams-current-circle/7.svg",
+    "https://www-league.nhlstatic.com/images/logos/teams-current-circle/20.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-12-light.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/301971744/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/images/logos/teams-current-primary-dark/21.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/301936032/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-25-dark.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-17-light.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/290013862/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/291015530/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/308180580/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/302317224/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/309964716/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-18-dark.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/301891622/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-2-secondary-light.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/289471614/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/299813882/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-4-light.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-5-light.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/301041748/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/309991890/binary-file/file.svg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSN4N59kymrO2JuS7vcdruceVzpm0ounWR-5N9RMwu9ITZg8VHx",
+    "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Toronto_Maple_Leafs_2016_logo.svg/1200px-Toronto_Maple_Leafs_2016_logo.svg.png",
+    "https://nhl.bamcontent.com/images/assets/binary/309954422/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/290581542/binary-file/file.svg",
+    "https://nhl.bamcontent.com/images/assets/binary/298789884/binary-file/file.svg",
+    "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1583360821/images/logos/team/current/team-52-dark.svg"
+    ]
 
 NYI = 0
 #Read each element from the table on fox sports
@@ -214,10 +248,7 @@ if len(teams) > 32:
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == 'POST':
-        return render_template('index.html')
-    else:
-        return render_template('index.html')
+        return render_template('index.html',teams=teams)
 
 @app.route('/stats')
 def stats():
@@ -232,6 +263,52 @@ def about():
 def PPstats():
     teams = Todo.query.order_by(Todo.teamName).all()
     return render_template('PPstats.html', teams=teams)
+
+@app.route('/simulation', methods=['POST', 'GET'])
+def simulation():
+    teams = Todo.query.all()
+    if request.method == 'POST':
+        home = int(request.form.get('homeTeam'))
+        away = int(request.form.get('awayTeam'))
+        ht = teams[home-1]
+        at = teams[away-1]
+        avg=teams[31]
+
+        #Calculate expected shots
+        hShots = ((ht.corsiFor - avg.corsiFor) + (at.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.8
+        aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.8
+
+        #Calculate even strength goals
+        hESG = hShots * (ht.shotP/100) * .85
+        aESG = aShots * (at.shotP/100) * .85
+        
+        #Calulate power play attempts
+        hPPA = ((ht.PPO - avg.PPO) + (at.PPOA - avg.PPOA) + avg.PPO)
+        aPPA = ((at.PPO - avg.PPO) + (ht.PPOA - avg.PPOA) + avg.PPO)
+
+        #Calculate Goals per attempt
+        hGPA = ht.PPG / ht.PPO
+        aGPA = at.PPG / at.PPO
+        lGPA = avg.PPG / avg.PPO
+
+        #Calculate goals per attempt against
+        hGPAA = ht.PPGA / ht.PPOA
+        aGPAA = at.PPGA / at.PPOA
+
+        #Calculate expected goals
+        hPPG = ((hGPA - lGPA) + (aGPAA - lGPA) + lGPA) * hPPA
+        aPPG = ((aGPA - lGPA) + (hGPAA - lGPA) + lGPA) * aPPA
+
+        #Calculate total goals
+        hXG = hPPG + hESG
+        aXG = aPPG + aESG
+
+        #Calculate win percentage
+        hWP = hXG*hXG / (aXG*aXG + hXG*hXG)
+        print(hWP)
+        aWP = aXG*aXG / (aXG*aXG + hXG*hXG)
+
+        return render_template('simulation.html', home=teams[home-1], away=teams[away-1], avg=avg, awayLogo = logo[away], homeLogo = logo[home], hShots=hShots, aShots=aShots, hESG=hESG, aESG=aESG, hPPG=hPPG, aPPG=aPPG, hXG=hXG, aXG=aXG, hWP=hWP, aWP=aWP)
 
 if __name__ == "__main__":
     app.run(debug=True)
