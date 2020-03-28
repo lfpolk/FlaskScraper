@@ -32,35 +32,13 @@ var logo = [
     "https://nhl.bamcontent.com/images/assets/binary/298789884/binary-file/file.svg",
     "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1583360821/images/logos/team/current/team-52-dark.svg"
     ];
-    function simulate() {
-      var homeTeam = document.getElementById("homeTeam").value;
-      var awayTeam = document.getElementById("awayTeam").value;
-      var homePercentage = 0;
-      if (homeTeam == awayTeam) {
-        document.getElementById("sameTeam").innerHTML = "Teams can't play themselves";
-      }
-      else {
-      document.getElementById("sameTeam").innerHTML = "";
-      homePercentage =  Math.round((Math.random() * 40)) + 30;
-      document.getElementById("homeWPercent").innerHTML = homePercentage + "%";
-      document.getElementById("awayWPercent").innerHTML = (100 - homePercentage) + "%";
-    
-      }
-      document.getElementById("SimulatedData").style.visibility = "visible";
-    }
     
     function changeHomeImage() {
       document.getElementById("home-logo").src = logo[document.getElementById("homeTeam").value];
-      document.getElementById("homeWPercent").innerHTML = " ";
-      document.getElementById("awayWPercent").innerHTML = " ";
-      document.getElementById("SimulatedData").style.visibility = "hidden";
     }
     
     function changeAwayImage() {
       document.getElementById("away-logo").src = logo[document.getElementById("awayTeam").value];
-      document.getElementById("homeWPercent").innerHTML = " ";
-      document.getElementById("awayWPercent").innerHTML = " ";
-      document.getElementById("SimulatedData").style.visibility = "hidden";
     }
 
     function sortTable(className) {

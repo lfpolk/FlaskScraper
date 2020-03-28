@@ -26,12 +26,12 @@
       </tr>
       <tr class="ESData">
         <td class="homeStat" id="homeEXEG">{{ ((hESG * 100)|round)/100 }}</td>
-        <td class="label">Expected ES goals</td>
+        <td class="label">Expected 5v5 goals</td>
         <td class="awayStat" id="awayEXEG">{{ ((aESG * 100)|round)/100 }}</td>
       </tr>
       <tr class="PPData">
         <td class="homeStat" id="homeXPP">{{ ((hPPG * 100)|round)/100 }}</td>
-        <td class="label">Expected PP goals</td>
+        <td class="label">Expected power play goals</td>
         <td class="awayStat" id="awayXPP">{{ ((aPPG * 100)|round)/100 }}</td>
       </tr>
       <tr class="scoreData">
@@ -40,9 +40,30 @@
         <td class="awayStat" id="awayScore">{{ ((aXG * 100)|round)/100 }}</td>
       </tr>
       <tr class="winData">
-        <td class="homeStat" id="homeWPercent">{{ ((hWP * 10000)|round)/100 }}%</td>
+        <td class="homeStat" id="homeWPercent"><strong>{{ ((hWP * 10000)|round)/100 }}% </strong></td>
         <td id="winPercent" class="label">Win Percentage</td>
-        <td class="awayStat" id="awayWPercent">{{ ((aWP * 10000)|round)/100 }}%</td>
+        <td class="awayStat" id="awayWPercent"><strong>{{ ((aWP * 10000)|round)/100 }}%</strong></td>
+      </tr>
+      <tr class="oddsData">
+        <td class="homeStat" id="homeOdds">
+            <strong>
+                {% if hWP > aWP %}
+                {{ ((hWP*100 / (1 - (hWP))) * -1) |round|int }}
+                {% else %}
+                    +{{  ((100 / (hWP)) - 100) |round|int }}
+                {% endif %}
+            </strong>
+        </td>
+        <td id="odds" class="label">Odds</td>
+        <td class="awayStat" id="awayOdds">
+            <strong>
+                {% if aWP > hWP %}
+                {{ ((aWP*100 / (1 - (aWP))) * -1) |round|int }}
+                {% else %}
+                    +{{  ((100 / (aWP)) - 100) |round|int  }}
+                {% endif %}
+            </strong>
+        </td>
       </tr>
     </table>
   </div>

@@ -23,18 +23,21 @@ class Todo(db.Model):
     SHO = db.Column(db.Integer, nullable=False)
     PPGA = db.Column(db.Integer, nullable=False)
     PPOA = db.Column(db.Integer, nullable=False)
+
+""" To do
+class Goalie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    teamName = db.Column(db.String(3), nullable=False)
+    goalieName = db.Column(db.String(40), nullable=False)
+    saveP = db.Column(db.Integer, nullable=False)
+
     
 
     def __repr__(self):
         return'<Task %r>' % self.id
-
-
+"""
 #Create class for each team to be an object of
 class Team:
-
-    #Static variable that keeps
-    totalCorsi = 0
-
 
     def __init__(self, teamName, corsiFor, corsiAgainst, corsiFPercent, shotPercent, gamesPlayed, ppGoals, ppOpp, shGoals, shOpp, ppGAgainst, ppOppAgainst):
         self.teamName = teamName
@@ -50,6 +53,30 @@ class Team:
         self.ppGAgainst = ppGAgainst
         self.ppOppAgainst = ppOppAgainst
 
+"""
+class goalie:
+
+    def __init__(self, tName, gName, SVP):
+        self.tName = tName
+        self.gName = gName
+        self.SVP = SVP
+
+#Request URL for goalie stats from NHL
+gref = requests.get('http://www.nhl.com/stats/goalies?reportType=season&seasonFrom=20192020&seasonTo=20192020&gameType=2&filter=gamesPlayed,gte,1&filter=shotsAgainst,gte,400&sort=a_teamAbbrevs&page=0&pageSize=62')
+soup = bs4.BeautifulSoup(gref.text, 'html.parser')
+goalies = []
+
+for i in range(70):
+        elem = soup.select(f'#root > main > div.ReactTable.-striped.-highlight.rthfc-k8c2qqcu.rthfc.-sp > div.rt-table > div.rt-tbody > div:nth-child({i})')
+        print(elem)
+        name = elem[0].text
+        print(elem)
+        print(name)
+"""
+
+
+
+
 
 #Request URL from hockey-reference
 ref = requests.get('https://www.hockey-reference.com/play-index/tpbp_finder.cgi?request=1&match=single&year_min=2020&year_max=2020&situation_id=5on5&order_by=corsi_for')
@@ -57,6 +84,7 @@ ref = requests.get('https://www.hockey-reference.com/play-index/tpbp_finder.cgi?
 #Parse the HTML file
 soup = bs4.BeautifulSoup(ref.text, 'html.parser')
 list = []
+
 #Read each element from the table on hockey reference into objects
 for i in range(1,33):
     if i != 21: # No data on row 20 on hockey-reference
@@ -305,7 +333,6 @@ def simulation():
 
         #Calculate win percentage
         hWP = hXG*hXG / (aXG*aXG + hXG*hXG)
-        print(hWP)
         aWP = aXG*aXG / (aXG*aXG + hXG*hXG)
 
         return render_template('simulation.html', home=teams[home-1], away=teams[away-1], avg=avg, awayLogo = logo[away], homeLogo = logo[home], hShots=hShots, aShots=aShots, hESG=hESG, aESG=aESG, hPPG=hPPG, aPPG=aPPG, hXG=hXG, aXG=aXG, hWP=hWP, aWP=aWP)
