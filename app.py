@@ -6,7 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 #Create Database
-ENV ='dev'
+ENV ='prod'
 
 if ENV == 'dev':
     app.debug = True
