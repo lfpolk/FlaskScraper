@@ -6,23 +6,48 @@ from datetime import datetime
 
 app = Flask(__name__)
 #Create Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cpufndielzwofq:cfb198efddab3d1bc845d381863043621aad0fbcfe3db2677066067c734d7907@ec2-35-171-31-33.compute-1.amazonaws.com:5432/dbr9llf5fr0qns'
+ENV ='dev'
+
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://larsonpolk:dukey@localhost/nhlpredictor'
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cpufndielzwofq:cfb198efddab3d1bc845d381863043621aad0fbcfe3db2677066067c734d7907@ec2-35-171-31-33.compute-1.amazonaws.com:5432/dbr9llf5fr0qns'
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 #Create table
-class Todo(db.Model):
+class Stats(db.Model):
+
+    __tablename__ = 'Stats'
     id = db.Column(db.Integer, primary_key=True)
     teamName = db.Column(db.String(40), nullable=False)
-    corsiFor = db.Column(db.Integer, nullable=False)
-    corsiAgainst = db.Column(db.Integer, nullable=False)
-    gamesPlayed = db.Column(db.Integer, nullable=False)
-    shotP = db.Column(db.Integer, nullable=False)
-    PPG = db.Column(db.Integer, nullable=False)
-    PPO = db.Column(db.Integer, nullable=False)
-    SHG = db.Column(db.Integer, nullable=False)
-    SHO = db.Column(db.Integer, nullable=False)
-    PPGA = db.Column(db.Integer, nullable=False)
-    PPOA = db.Column(db.Integer, nullable=False)
+    corsiFor = db.Column(db.Float, nullable=False)
+    corsiAgainst = db.Column(db.Float, nullable=False)
+    gamesPlayed = db.Column(db.Float, nullable=False)
+    shotP = db.Column(db.Float, nullable=False)
+    PPG = db.Column(db.Float, nullable=False)
+    PPO = db.Column(db.Float, nullable=False)
+    SHG = db.Column(db.Float, nullable=False)
+    SHO = db.Column(db.Float, nullable=False)
+    PPGA = db.Column(db.Float, nullable=False)
+    PPOA = db.Column(db.Float, nullable=False)
+
+    def __init__(self, id, teamName, corsiFor, corsiAgainst, gamesPlayed, shotP, PPG, PPO, SHG, SHO, PPGA, PPOA):
+        self.id = id
+        self.teamName = teamName
+        self.corsiFor = corsiFor
+        self.corsiAgainst = corsiAgainst
+        self.gamesPlayed = gamesPlayed
+        self.shotP = shotP
+        self.PPG = PPG
+        self.PPO = PPO
+        self.SHG = SHG
+        self.SHO = SHO
+        self.PPGA = PPGA
+        self.PPOA = PPOA
 
 """ To do
 class Goalie(db.Model):
@@ -257,15 +282,16 @@ shOpp = sum(c.shOpp for c in list)
 ppGAgainst = sum(c.ppGAgainst for c in list)
 ppOppAgainst = sum(c.ppOppAgainst for c in list)
 
+
 leagueAVG = Team('League Average',corsiFor/31, corsiAgainst/31, corsiFPercent/31, shotPercent/31, gamesPlayed/31, ppGoals/31, ppOpp/31, shGoals/31, shOpp/31, ppGAgainst/31, ppOppAgainst/31)
 list.append(leagueAVG)
-teams = Todo.query.order_by(Todo.teamName).all()
+teams = Stats.query.order_by(Stats.teamName).all()
 if len(teams) < 32:
     for i in teams:
         db.session.delete(i)
         db.session.commit()
     for i in range(0,32):
-        new_team = Todo(teamName=list[i].teamName,corsiFor= list[i].corsiFor/list[i].gamesPlayed, corsiAgainst=list[i].corsiAgainst/list[i].gamesPlayed, gamesPlayed=list[i].gamesPlayed, shotP=list[i].shotPercent, PPG = list[i].ppGoals / list[i].gamesPlayed, PPO = list[i].ppOpp / list[i].gamesPlayed, SHG = list[i].shGoals / list[i].gamesPlayed, SHO = list[i].shOpp / list[i].gamesPlayed, PPGA = list[i].ppGAgainst / list[i].gamesPlayed, PPOA = list[i].ppOppAgainst / list[i].gamesPlayed)
+        new_team = Stats(id=i+1,teamName=list[i].teamName,corsiFor= list[i].corsiFor/list[i].gamesPlayed, corsiAgainst=list[i].corsiAgainst/list[i].gamesPlayed, gamesPlayed=list[i].gamesPlayed, shotP=list[i].shotPercent, PPG = list[i].ppGoals / list[i].gamesPlayed, PPO = list[i].ppOpp / list[i].gamesPlayed, SHG = list[i].shGoals / list[i].gamesPlayed, SHO = list[i].shOpp / list[i].gamesPlayed, PPGA = list[i].ppGAgainst / list[i].gamesPlayed, PPOA = list[i].ppOppAgainst / list[i].gamesPlayed)
         db.session.add(new_team)
         db.session.commit()
 
@@ -280,7 +306,7 @@ def index():
 
 @app.route('/stats')
 def stats():
-    teams = Todo.query.order_by(Todo.teamName).all()
+    teams = Stats.query.order_by(Stats.teamName).all()
     return render_template('stats.html', teams=teams)
 
 @app.route('/about')
@@ -289,12 +315,12 @@ def about():
 
 @app.route('/PPstats')
 def PPstats():
-    teams = Todo.query.order_by(Todo.teamName).all()
+    teams = Stats.query.order_by(Stats.teamName).all()
     return render_template('PPstats.html', teams=teams)
 
 @app.route('/simulation', methods=['POST', 'GET'])
 def simulation():
-    teams = Todo.query.all()
+    teams = Stats.query.all()
     if request.method == 'POST':
         home = int(request.form.get('homeTeam'))
         away = int(request.form.get('awayTeam'))
@@ -338,4 +364,4 @@ def simulation():
         return render_template('simulation.html', home=teams[home-1], away=teams[away-1], avg=avg, awayLogo = logo[away], homeLogo = logo[home], hShots=hShots, aShots=aShots, hESG=hESG, aESG=aESG, hPPG=hPPG, aPPG=aPPG, hXG=hXG, aXG=aXG, hWP=hWP, aWP=aWP)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
