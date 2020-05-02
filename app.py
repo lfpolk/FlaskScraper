@@ -285,7 +285,7 @@ shOpp = sum(c.shOpp for c in list)
 ppGAgainst = sum(c.ppGAgainst for c in list)
 ppOppAgainst = sum(c.ppOppAgainst for c in list)
 
-"""
+
 leagueAVG = Team('League Average',corsiFor/31, corsiAgainst/31, corsiFPercent/31, shotPercent/31, gamesPlayed/31, ppGoals/31, ppOpp/31, shGoals/31, shOpp/31, ppGAgainst/31, ppOppAgainst/31)
 list.append(leagueAVG)
 teams = Stats.query.order_by(Stats.teamName).all()
@@ -302,12 +302,12 @@ if len(teams) > 32:
     for i in teams:
         db.session.delete(i)
         db.session.commit()
-"""
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
         #return render_template('index.html',teams=teams)
         return render_template('index.html')
-"""
+
 @app.route('/stats')
 def stats():
     teams = Stats.query.order_by(Stats.teamName).all()
@@ -366,7 +366,7 @@ def simulation():
         aWP = aXG*aXG / (aXG*aXG + hXG*hXG)
 
         return render_template('simulation.html', home=teams[home-1], away=teams[away-1], avg=avg, awayLogo = logo[away], homeLogo = logo[home], hShots=hShots, aShots=aShots, hESG=hESG, aESG=aESG, hPPG=hPPG, aPPG=aPPG, hXG=hXG, aXG=aXG, hWP=hWP, aWP=aWP)
-"""
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
