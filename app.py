@@ -16,6 +16,7 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cpufndielzwofq:cfb198efddab3d1bc845d381863043621aad0fbcfe3db2677066067c734d7907@ec2-35-171-31-33.compute-1.amazonaws.com:5432/dbr9llf5fr0qns'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 db = SQLAlchemy(app)
 
 #Create table
