@@ -35,7 +35,7 @@ body {
 
 .navigation a{
     float: left;
-    padding: 0px 20px;
+    padding: 0px 10px;
     height: 100%;
     display: table;
     color: white;
@@ -45,7 +45,7 @@ body {
     display: table-cell;
     vertical-align: middle;
     height: 100%;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 100;
     color: white;
 }
@@ -237,30 +237,7 @@ table, th, td {
     float: left;
     text-align: center;
   }
-  
-  #homeWin {
-    float: left;
-    text-align: center;
-    position: relative;
-    top: 90px;
-    left: 90px;
-  }
-  
-  #awayWin {
-    float: right;
-    text-align: center;
-    position: relative;
-    top: 90px;
-    right: 90px;
-  }
-  
-  .percentage {
-    font-size: 30px;
-  }
-  
-  #winPercent {
-    font-style: Georgia;
-  }
+
   
   #away {
     font-family: Georgia;
@@ -300,10 +277,8 @@ table, th, td {
     background-color: gray;
     border: none;
     color: white;
-    padding: 15px 32px;
     font-size: 16px;
     border-radius: 8px;
-    transition-duration: 0.4s;
   }
   
   .simulateButton:hover {

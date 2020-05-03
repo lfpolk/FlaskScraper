@@ -313,10 +313,6 @@ def stats():
         teams = Stats.query.order_by(Stats.teamName).all()
         return render_template('stats.html', teams=teams)
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
 @app.route('/PPstats')
 def PPstats():
     teams = Stats.query.order_by(Stats.teamName).all()
