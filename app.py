@@ -305,8 +305,7 @@ if len(teams) > 32:
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-        #return render_template('index.html',teams=teams)
-        return render_template('index.html')
+        return render_template('index.html',teams=teams)
 
 @app.route('/stats')
 def stats():
