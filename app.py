@@ -333,8 +333,10 @@ def simulation():
         aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.8
 
         #Calculate even strength goals
-        hESG = hShots * (ht.shotP/100) * .85
-        aESG = aShots * (at.shotP/100) * .85
+        hSvP = .91
+        aSvP = .91
+        hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85) * 1.0436
+        aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85) * .9564
         
         #Calulate power play attempts
         hPPA = ((ht.PPO - avg.PPO) + (at.PPOA - avg.PPOA) + avg.PPO)
