@@ -286,6 +286,16 @@ table, th, td {
     position: relative;
     top: 225px;
   }
+
+  .updateButton {
+    background-color: gray;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+  }
   
   .teamDropDown {
     position: relative;
@@ -299,6 +309,12 @@ table, th, td {
   }
   
   .simulateButton:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+
+  .updateButton:hover {
     background-color: black;
     color: white;
     cursor: pointer;

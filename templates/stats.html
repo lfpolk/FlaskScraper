@@ -48,5 +48,12 @@
         </table>
         {% endif %}
         </div>
+        <form action="/stats" method="post">
+            If stats are not up to date:
+            <div id ="simulate">
+                <input type="submit" class="updateButton" value="Update Stats"></input>
+            </div>
+            Note: If you don't wait for the page to reload after updating stats (~30 seconds), stats will not be complete
+        </form>
 </div>
 {% endblock %}
