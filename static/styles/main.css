@@ -283,8 +283,7 @@ table, th, td {
     font-size: 16px;
     border-radius: 8px;
     transition-duration: 0.4s;
-    position: relative;
-    top: 225px;
+    margin-top: 300px;
   }
 
   .updateButton {

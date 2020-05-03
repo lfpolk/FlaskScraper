@@ -102,10 +102,43 @@ for i in range(70):
         print(name)
 """
 
-
+logo = [
+        "",
+        "https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png",
+        "https://nhl.bamcontent.com/images/assets/binary/309994320/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/301172494/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/images/logos/teams-current-circle/7.svg",
+        "https://www-league.nhlstatic.com/images/logos/teams-current-circle/20.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-12-light.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/301971744/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/images/logos/teams-current-primary-dark/21.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/301936032/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-25-dark.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-17-light.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/290013862/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/291015530/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/308180580/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/302317224/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/309964716/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-18-dark.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/301891622/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-2-secondary-light.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/289471614/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/299813882/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-4-light.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-5-light.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/301041748/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/309991890/binary-file/file.svg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSN4N59kymrO2JuS7vcdruceVzpm0ounWR-5N9RMwu9ITZg8VHx",
+        "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Toronto_Maple_Leafs_2016_logo.svg/1200px-Toronto_Maple_Leafs_2016_logo.svg.png",
+        "https://nhl.bamcontent.com/images/assets/binary/309954422/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/290581542/binary-file/file.svg",
+        "https://nhl.bamcontent.com/images/assets/binary/298789884/binary-file/file.svg",
+        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1583360821/images/logos/team/current/team-52-dark.svg"
+        ]
 
 def scrape():
-    global teams, logo
+    global teams
     #Request URL from hockey-reference
     ref = requests.get('https://www.hockey-reference.com/play-index/tpbp_finder.cgi?request=1&match=single&year_min=2020&year_max=2020&situation_id=5on5&order_by=corsi_for')
 
@@ -186,40 +219,7 @@ def scrape():
 
     fox = requests.get('https://www.foxsports.com/nhl/team-stats?season=2019&category=SPECIAL+TEAMS&group=1&time=0&pos=0&team=1&page=1')
     soup = bs4.BeautifulSoup(fox.text, 'html.parser')
-    logo = [
-        "",
-        "https://cdn.freebiesupply.com/logos/large/2x/anaheim-ducks-logo.png",
-        "https://nhl.bamcontent.com/images/assets/binary/309994320/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/301172494/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/images/logos/teams-current-circle/7.svg",
-        "https://www-league.nhlstatic.com/images/logos/teams-current-circle/20.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-12-light.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/301971744/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/images/logos/teams-current-primary-dark/21.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/301936032/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-25-dark.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-17-light.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/290013862/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/291015530/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/308180580/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/302317224/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/309964716/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-18-dark.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/301891622/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-2-secondary-light.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/289471614/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/299813882/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-4-light.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1581615643/images/logos/team/current/team-5-light.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/301041748/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/309991890/binary-file/file.svg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSN4N59kymrO2JuS7vcdruceVzpm0ounWR-5N9RMwu9ITZg8VHx",
-        "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Toronto_Maple_Leafs_2016_logo.svg/1200px-Toronto_Maple_Leafs_2016_logo.svg.png",
-        "https://nhl.bamcontent.com/images/assets/binary/309954422/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/290581542/binary-file/file.svg",
-        "https://nhl.bamcontent.com/images/assets/binary/298789884/binary-file/file.svg",
-        "https://www-league.nhlstatic.com/nhl.com/builds/site-core/15a57250ae5ef77e77d0aeb2f5dfb813067e4885_1583360821/images/logos/team/current/team-52-dark.svg"
-        ]
+
 
     NYI = 0
     #Read each element from the table on fox sports
