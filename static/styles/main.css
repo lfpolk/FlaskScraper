@@ -271,8 +271,7 @@ table, th, td {
   }
   
   #simulate {
-    position: relative;
-    text-align: center;
+    float: center;
   }
   
   .simulateButton {
