@@ -330,18 +330,26 @@ def simulation():
         at = teams[away-1]
         avg=teams[31]
 
-        #Calculate expected shots
-        hShots = ((ht.corsiFor - avg.corsiFor) + (at.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85
-        aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85
+        #Calculate expected shots using corsi adjusted for teams home/road splits
+        homeAdjusterCF = 1.0436
+        homeAdjusterCA = .9564
+        awayAdjusterCF = .9564
+        awayAdjusterCA = 1.0436
+        homeMultiplier = (((homeAdjusterCF - 1) + (awayAdjusterCA - 1))/2) + 1
+        awayMultiplier = (((awayAdjusterCF - 1) + (homeAdjusterCA - 1))/2) + 1
+        print(homeMultiplier)
+        print(awayMultiplier)
+        print(homeMultiplier * awayMultiplier)
+
+        hShots = ((ht.corsiFor - avg.corsiFor) + (at.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85 * homeMultiplier
+        aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85 * awayMultiplier
 
         #Calculate even strength goals
         #Replace hSvP and aSvP when goalie stats are accessible
         hSvP = .91
         aSvP = .91
-        hMultiplier = 1.0436
-        aMultiplier = .9564
-        hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85) * hMultiplier
-        aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85) * aMultiplier
+        hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85)
+        aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85)
         
         #Calulate power play attempts
         hPPX = 1.034808419
