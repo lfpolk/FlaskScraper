@@ -180,6 +180,7 @@ def scrape():
     list[5], list[6] = list[6], list[5]
     list[6], list[7] = list[7], list[6]
     list[7], list[8] = list[8], list[7]
+    list[29], list[30] = list[30], list[29]
 
 
 
@@ -302,6 +303,7 @@ def scrape():
 def index():
         teams = Stats.query.order_by(Stats.teamName).all()
         return render_template('index.html',teams=teams)
+
 
 @app.route('/stats', methods=['POST', 'GET'])
 def stats():
