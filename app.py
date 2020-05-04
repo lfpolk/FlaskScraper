@@ -329,8 +329,8 @@ def simulation():
         avg=teams[31]
 
         #Calculate expected shots
-        hShots = ((ht.corsiFor - avg.corsiFor) + (at.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.8
-        aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.8
+        hShots = ((ht.corsiFor - avg.corsiFor) + (at.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85
+        aShots = ((at.corsiFor - avg.corsiFor) + (ht.corsiAgainst - avg.corsiAgainst) + avg.corsiAgainst) * 0.85
 
         #Calculate even strength goals
         #Replace hSvP and aSvP when goalie stats are accessible
@@ -353,8 +353,8 @@ def simulation():
         aGPAA = at.PPGA / at.PPOA
 
         #Calculate expected goals
-        hPPG = ((hGPA - lGPA) + (aGPAA - lGPA) + lGPA) * hPPA
-        aPPG = ((aGPA - lGPA) + (hGPAA - lGPA) + lGPA) * aPPA
+        hPPG = (((hGPA - lGPA) + (aGPAA - lGPA) + lGPA) * hPPA) * 1.0436
+        aPPG = (((aGPA - lGPA) + (hGPAA - lGPA) + lGPA) * aPPA) * .9564
 
         #Calculate total goals
         hXG = hPPG + hESG
