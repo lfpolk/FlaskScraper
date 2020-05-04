@@ -302,13 +302,13 @@ def scrape():
 @app.route('/', methods=['POST', 'GET'])
 def index():
         teams = Stats.query.order_by(Stats.teamName).all()
+        print(teams)
         return render_template('index.html',teams=teams)
 
 
 @app.route('/stats', methods=['POST', 'GET'])
 def stats():
     if request.method == 'POST':
-        scrape()
         teams = Stats.query.order_by(Stats.teamName).all()
         return render_template('stats.html', teams=teams)
     else:
@@ -338,12 +338,16 @@ def simulation():
         #Replace hSvP and aSvP when goalie stats are accessible
         hSvP = .91
         aSvP = .91
-        hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85) * 1.0436
-        aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85) * .9564
+        hMultiplier = 1.0436
+        aMultiplier = .9564
+        hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85) * hMultiplier
+        aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85) * aMultiplier
         
         #Calulate power play attempts
-        hPPA = ((ht.PPO - avg.PPO) + (at.PPOA - avg.PPOA) + avg.PPO)
-        aPPA = ((at.PPO - avg.PPO) + (ht.PPOA - avg.PPOA) + avg.PPO)
+        hPPX = 1.034808419
+        aPPX = 0.965191581
+        hPPA = ((ht.PPO - avg.PPO) + (at.PPOA - avg.PPOA) + avg.PPO) * hPPX
+        aPPA = ((at.PPO - avg.PPO) + (ht.PPOA - avg.PPOA) + avg.PPO) * aPPX
 
         #Calculate Goals per attempt
         hGPA = ht.PPG / ht.PPO
@@ -355,16 +359,19 @@ def simulation():
         aGPAA = at.PPGA / at.PPOA
 
         #Calculate expected goals
-        hPPG = (((hGPA - lGPA) + (aGPAA - lGPA) + lGPA) * hPPA) * 1.0436
-        aPPG = (((aGPA - lGPA) + (hGPAA - lGPA) + lGPA) * aPPA) * .9564
+        hPPG = (((hGPA - lGPA) + (aGPAA - lGPA) + lGPA) * hPPA)
+        aPPG = (((aGPA - lGPA) + (hGPAA - lGPA) + lGPA) * aPPA)
 
         #Calculate total goals
         hXG = hPPG + hESG
         aXG = aPPG + aESG
 
+        #Calculate pythagenpat exponent
+        pythagenpat = (hXG + aXG) ** .458
+
         #Calculate win percentage
-        hWP = hXG*hXG / (aXG*aXG + hXG*hXG)
-        aWP = aXG*aXG / (aXG*aXG + hXG*hXG)
+        hWP = hXG ** pythagenpat / (aXG ** pythagenpat + hXG ** pythagenpat)
+        aWP = aXG ** pythagenpat / (hXG ** pythagenpat + aXG ** pythagenpat)
 
         return render_template('simulation.html', home=teams[home-1], away=teams[away-1], avg=avg, awayLogo = logo[away], homeLogo = logo[home], hShots=hShots, aShots=aShots, hESG=hESG, aESG=aESG, hPPG=hPPG, aPPG=aPPG, hXG=hXG, aXG=aXG, hWP=hWP, aWP=aWP)
 
