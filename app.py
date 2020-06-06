@@ -17,7 +17,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://larsonpolk:dukey@localhost/nhlpredictor'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cpufndielzwofq:cfb198efddab3d1bc845d381863043621aad0fbcfe3db2677066067c734d7907@ec2-35-171-31-33.compute-1.amazonaws.com:5432/dbr9llf5fr0qns'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://glkctumuxoeduk:53e6f0153169b96eb417c5a10a6075ad0190ec3bc8d8c9a59cc7b5c10d86fedf@ec2-34-193-117-204.compute-1.amazonaws.com:5432/dcuhn2bkojv2g3'
 
 db = SQLAlchemy(app)
 
@@ -346,8 +346,8 @@ def simulation():
 
         #Calculate even strength goals
         #Replace hSvP and aSvP when goalie stats are accessible
-        hSvP = .91
-        aSvP = .91
+        hSvP = .926
+        aSvP = .923
         hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85)
         aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85)
         
