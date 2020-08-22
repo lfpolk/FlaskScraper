@@ -14,7 +14,8 @@ ENV ='prod'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://larsonpolk:dukey@localhost/nhlpredictor'
+    #CHANGE username and 'macPassword' to personal database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://larsonpolk:macPassword@localhost/nhlpredictor'
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://glkctumuxoeduk:53e6f0153169b96eb417c5a10a6075ad0190ec3bc8d8c9a59cc7b5c10d86fedf@ec2-34-193-117-204.compute-1.amazonaws.com:5432/dcuhn2bkojv2g3'
@@ -331,10 +332,10 @@ def simulation():
         avg=teams[31]
 
         #Calculate expected shots using corsi adjusted for teams home/road splits
-        homeAdjusterCF = 1.0436
-        homeAdjusterCA = .9564
-        awayAdjusterCF = .9564
-        awayAdjusterCA = 1.0436
+        homeAdjusterCF = 1#1.0436
+        homeAdjusterCA = 1#.9564
+        awayAdjusterCF = 1#.9564
+        awayAdjusterCA = 1#1.0436
         homeMultiplier = (((homeAdjusterCF - 1) + (awayAdjusterCA - 1))/2) + 1
         awayMultiplier = (((awayAdjusterCF - 1) + (homeAdjusterCA - 1))/2) + 1
         print(homeMultiplier)
@@ -346,14 +347,14 @@ def simulation():
 
         #Calculate even strength goals
         #Replace hSvP and aSvP when goalie stats are accessible
-        hSvP = .926
-        aSvP = .923
+        hSvP = .915
+        aSvP = .915
         hESG = (hShots * ((ht.shotP/100 + 1-aSvP)/2) * .85)
         aESG = (aShots * ((at.shotP/100 + 1-hSvP)/2) * .85)
         
         #Calulate power play attempts
-        hPPX = 1.034808419
-        aPPX = 0.965191581
+        hPPX = 1#1.034808419
+        aPPX = 1#0.965191581
         hPPA = ((ht.PPO - avg.PPO) + (at.PPOA - avg.PPOA) + avg.PPO) * hPPX
         aPPA = ((at.PPO - avg.PPO) + (ht.PPOA - avg.PPOA) + avg.PPO) * aPPX
 
